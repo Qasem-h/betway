@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html ng-app="angularExample">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/styles")
+    <link href="~/Content/BetwayCss/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Morris -->
+    <link href="~/Content/BetwayCss/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="~/Content/BetwayCss/css/plugins/gritterjs/jquery.gritter.css" rel="stylesheet">
+    <link href="~/Content/BetwayCss/Angular/css/animate.css" rel="stylesheet">
+    <link href="~/Content/BetwayCss/css/style.css" rel="stylesheet" />
+    <link href="~/Content/BetwayCss/Site.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="wrapper">
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            @Html.Partial("_SidebarNav")
+        }
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Betway Uganda</a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Welcome to Betway admin.</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        @RenderBody()
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/scripts")
+<!-- Mainly scripts -->
+<script src="~/Scripts/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="~/Scripts/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/Scripts/js/angularjs/angular.js"></script>
+<script src="~/Scripts/jscontrollers/upida.angular.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="~/Scripts/js/inspinia.js"></script>
+<script src="~/Scripts/js/plugins/pace/pace.min.js"></script>
+<!-- jQuery UI -->
+<script src="~/Scripts/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Sparkline -->
+<script src="~/Scripts/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- Sparkline demo data  -->
+<script src="~/Scripts/js/demo/sparkline-demo.js"></script>
+<script src="~/Scripts/jscontrollers/app.js"></script>
+<script src="~/Scripts/js/angularjs/angular-route.js"></script>
+<script src="~/Scripts/js/angularjs/angular-cookies.js"></script>
+<script src="~/Scripts/js/angularjs/upida.angular.js"></script>
+<script src="~/Scripts/js/angularjs/ngDialog.js"></script>
+<script src="~/Scripts/js/angularjs/ui-bootstrap-tpls-0.11.2.min.js"></script>
+@RenderSection("scripts", required: false)
+</body>
+</html>

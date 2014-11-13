@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BetwayLayout.cshtml";
+}
+
+<div class="wrapper wrapper-content" ng-controller="managerController" ng-init="loadBranch()">
+    <div class="row">
+        <div class="col-lg-12"><h5 ng-bind="BranchSummary.BranchName">Branch Name</h5></div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Manager Balance</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" ng-bind="BranchSummary.Managerbalance|number"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Total Teller Balance</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" ng-bind="BranchSummary.TotalTellerBalance|number"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Branch Balance</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins" ng-bind="BranchSummary.BranchBalance|number"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Teller Summary </h5>
+
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-striped">
+                        <thead><tr><td>Teller</td> <td>Sales</td><td>CashOut</td> <td>Balance</td> <td>Maximum Cash</td></tr></thead>
+                        <tbody>
+                            <tr ng-repeat="teller in tellers">
+                                <td><a href="~/Manager/UserAccount/{{teller.UserId}}"><i class="icon-eye-open">{{teller.UserId}}</i></a></td>
+                                <td>{{teller.Sales|number}}({{teller.TotalReceipt}})</td>
+                                <td ng-bind="teller.CashOut|number"></td>
+                                <td>{{teller.Balance|number}}</td>
+
+                                <td>1000000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+<script src="~/Scripts/jscontrollers/managerController.js"></script>
+}

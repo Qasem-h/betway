@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Domain.Models.Concrete.Statement>
+
+@{
+    ViewBag.Title = "Statement";
+    Layout = "~/Views/Shared/_BetwayLayout.cshtml";
+}
+
+
+<script src="~/Scripts/DataTables-1.10.2/DT_bootstrap.js"></script>
+<div class="page-wrapper">
+    <div class="row wrapper border-bottom">
+        <div class="col-sm-4">
+            <h2>Statements</h2>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <table class="table table-hover table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                Account
+                            </th>
+                            <th>
+                                Transaction
+                            </th>
+
+
+                            <th>
+                                Time
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Comment)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Transcation)
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StatetmentDate)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comment)
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
+        
+    </div>

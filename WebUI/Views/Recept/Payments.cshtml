@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Payments";
+    Layout = "~/Views/Shared/_BetwayLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="row wrapper border-bottom">
+        <div class="col-sm-4">
+            <h2>Payments</h2>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper wrapper-content animated fadeInUp">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>All payments made</h5>
+
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input id="RecNum" type="text" placeholder="Enter Serial Number" class="input-sm form-control"> 
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary click" id="btnPopup"> Ok</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                   
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <script src="~/Scripts/jquery/jquery.min.js"></script>
+        <script src="~/Scripts/jquery-ui.js"></script>
+        <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+        <script type="text/javascript">
+            $("[id*=btnPopup]").live("click", function () {
+                var reciept = $("input#RecNum").val();
+                $.ajax({
+                    url: '@Url.Action("RecieptData", "Recept")/' + reciept,
+                    dataType: 'json',
+                    type: 'GET'
+                }).done(function (data) {  //excluding the first row because those are column titles
+
+                    var dt = '';
+
+                    dt = '<table width="600" class="receiptData" >';
+                    // alert("out");
+                    dt += ('' +
+                          '<th colspan="2"><b>Ticket ID: <label  id="Reciept" >' + reciept + '</label></b></th>');
+                    //   alert(dt);
+                    var status = "";
+                    var betmoney = 0;
+                    var setodd = 0;
+                    var loop = 0;
+                    var winAmount = 0;
+
+                    for (var i in data) {
+                        status = data[i].status;
+                        //   $('.status:contains("Won")').css('color', 'red');
+                        winAmount = data[i].WonAmount;
+                        loop += 1;
+                        if (loop == 1) {
+                            dt += (
+                 '<tr>' +
+                  '<td   colspan="2" >Stake:' + data[i].BetMoney + '</td>' + '</tr><tr>' +
+                      '<td  data-field="matchId" class="match-code">Status:' + data[i].status + '</td>' + '</tr><tr>' +
+
+                   '<td> TotalOdd:' + data[i].SetOdd + '</td>' +
+                     '</tr>   <tr>' +
+                      '<td  data-field="matchId" class="match-code status">Status:' + data[i].status + '</td></tr>' +
+                     '<tr><td colspan="2">-------------------------<td></tr>'
+                        );
+                        }
+                        dt += (
+                  '<tr class="match" id="' + data[i].id + '">' +
+                   '<td  data-field="matchId" class="match-code" colspan="2" >' + data[i].team + '</td>' + '</tr><tr>' +
+
+                    '<td  data-field="betmoney" class="match-code"> ' + data[i].choice + '</td>' +
+                     '<td  data-field="betmoney" class="match-code"> ' + data[i].Scores + '</td>' +
+
+
+                      '</tr>' +
+                      '<tr><td colspan="2">-----------------------<td></tr>'
+
+                      );
+
+                    }
+
+                    dt += ('</table>');
+                    winAmount = 0;
+                    // alert(dt);
+
+                    if (status == "Won") {
+
+                        dt += ' <label  id="TicketNumber" data-odd-type="1" value="40000"/>';
+                        dt += '<input id="payreciept" type="button" class="btn btn-success btn-xs odd" value="PayReciept" data-odd-type="1" />';
+
+                    }
+                    $("#dialog").html(dt);
+                    // original data from the server
+                    games = data;
+                    //  console.log(Matchs);
+                    $("#dialog").dialog({
+                        title: "Ticket Details",
+                        buttons: {
+                            Close: function () {
+                                $(this).dialog('close');
+
+                            },
+                        }
+                    });
+
+                })
+
+                return false;
+            });
+            function ToJavaScriptDate(value) {
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                if (dt.getHours < 12) {
+                    return (dt.getHours() + ':' + dt.getMinutes() + ' AM');
+                } else {
+                    return (dt.getHours() - 12 + ':' + dt.getMinutes() + ' PM');
+                }
+            }
+            $("[id*=payreciept]").live("click", function () {
+                var recieptid = $("input#RecNum").val();
+                alert(recieptid);
+                $.ajax({
+                    url: '@Url.Action("PayReciept", "Recept")/' + recieptid,
+                    dataType: 'json',
+                    type: 'GET'
+                }).done(function (data) {
+                    window.location.reload();
+                    $("#dialog").hide(20);
+                    //  location.reload();
+                    alert("back");
+                })
+
+            })
+
+        </script>
+
+
+        <div id="dialog" style="display: none; width:1000px; ">
+            Reciept Details
+        </div>
+
+    </div>
+</div>
